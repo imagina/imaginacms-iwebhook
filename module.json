@@ -1,0 +1,16 @@
+{
+    "name": "Iwebhooks",
+    "alias": "iwebhooks",
+    "version": "1.0.0",
+	"description": "",
+    "keywords": [],
+    "priority": 1,
+    "providers": [
+        "Modules\\Iwebhooks\\Providers\\IwebhooksServiceProvider",
+        "Modules\\Iwebhooks\\Providers\\EventServiceProvider",
+        "Modules\\Iwebhooks\\Providers\\RouteServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
