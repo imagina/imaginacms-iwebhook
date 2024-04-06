@@ -26,6 +26,15 @@ class Category extends CrudModel
     'deleting' => [],
     'deleted' => []
   ];
-  public $translatedAttributes = [];
-  protected $fillable = [];
+  public $translatedAttributes = [
+    'title',
+    'description',
+    'slug'
+  ];
+  protected $fillable = [
+    'system_name',
+    'parent_id',
+    'status',
+    'options'
+  ];
 }

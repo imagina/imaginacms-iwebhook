@@ -26,6 +26,17 @@ class Hook extends CrudModel
     'deleting' => [],
     'deleted' => []
   ];
-  public $translatedAttributes = [];
-  protected $fillable = [];
+  public $translatedAttributes = [
+    'title',
+    'description',
+    'action_label'
+  ];
+  protected $fillable = [
+    'endpoint',
+    'http_method',
+    'body',
+    'headers',
+    'is_loading',
+    'call_every_minutes'
+  ];
 }

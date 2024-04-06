@@ -16,7 +16,9 @@ class CreateIwebhooksHookTranslationsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             // Your translatable fields
-
+            $table->text('title');
+            $table->text('description');
+            $table->text('action_label')->nullable();
             $table->integer('hook_id')->unsigned();
             $table->string('locale')->index();
             $table->unique(['hook_id', 'locale']);
