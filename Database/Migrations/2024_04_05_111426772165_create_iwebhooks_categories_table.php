@@ -18,7 +18,6 @@ class CreateIwebhooksCategoriesTable extends Migration
             // Your fields...
             $table->string('system_name')->unique()->nullable();
             $table->integer('parent_id')->default(0)->nullable();
-            $table->text('options')->nullable();
             $table->integer('status')->default(1)->unsigned();
             // Audit fields
             $table->timestamps();

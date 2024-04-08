@@ -22,6 +22,8 @@ class CreateIwebhooksHooksTable extends Migration
             $table->json('headers')->nullable();
             $table->boolean('is_loading')->default(0)->nullable();
             $table->integer('call_every_minutes')->nullable();
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('iwebhooks__categories')->onDelete('cascade');
             // Audit fields
             $table->timestamps();
             $table->auditStamps();

@@ -37,6 +37,17 @@ class Hook extends CrudModel
     'body',
     'headers',
     'is_loading',
-    'call_every_minutes'
+    'call_every_minutes',
+    'category_id'
   ];
+
+  protected $casts = [
+    'body' => 'array',
+    'headers' => 'array'
+  ];
+
+  public function category()
+  {
+    return $this->belongsTo(Category::class)->with('translations');
+  }
 }

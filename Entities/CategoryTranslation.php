@@ -3,6 +3,7 @@
 namespace Modules\Iwebhooks\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class CategoryTranslation extends Model
 {

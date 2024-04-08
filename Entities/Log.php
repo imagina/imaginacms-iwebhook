@@ -26,6 +26,7 @@ class Log extends CrudModel
     'deleting' => [],
     'deleted' => []
   ];
+  public $translatedAttributes = [];
   protected $fillable = [
     'response',
     'http_status',

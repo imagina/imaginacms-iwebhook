@@ -33,8 +33,6 @@ class Category extends CrudModel
   ];
   protected $fillable = [
     'system_name',
-    'parent_id',
-    'status',
-    'options'
+    'status'
   ];
 }
