@@ -7,7 +7,9 @@ return [
     "adminHooks" => "Hooks",
     "adminLogs" => "Logs"
   ],
-  "label" => [],
+  "label" => [
+    "dispatch" => "Dispatch"
+  ],
   "form" => [
     "httpMethod" => "HTTP Method",
     "httpStatus" => "HTTP Status",

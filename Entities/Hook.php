@@ -50,4 +50,12 @@ class Hook extends CrudModel
   {
     return $this->belongsTo(Category::class)->with('translations');
   }
+
+  public function logs() {
+    return $this->hasMany(Log::class);
+  }
+
+  public function log() {
+    return $this->hasOne(Log::class)->latestOfMany();
+  }
 }

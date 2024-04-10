@@ -24,9 +24,9 @@ $router->group(['prefix' =>'/iwebhooks/v1'], function (Router $router) {
       //'middleware' => ['create' => [], 'index' => [], 'show' => [], 'update' => [], 'delete' => [], 'restore' => []],
       'customRoutes' => [
         [
-          'method' => 'get', // get,post,put....
-          'path' => '/run/{criteria}', // Route Path
-          'uses' => 'runWebhook', //Name of the controller method to use
+          'method' => 'post', // get,post,put....
+          'path' => '/dispatch/{criteria}', // Route Path
+          'uses' => 'dispatch', //Name of the controller method to use
           //'middleware' => [] // if not set up middleware, auth:api will be the default
         ]
       ]

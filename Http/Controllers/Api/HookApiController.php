@@ -9,6 +9,7 @@ use Modules\Iwebhooks\Entities\Hook;
 use Modules\Iwebhooks\Repositories\HookRepository;
 use Illuminate\Http\Request;
 use Mockery\CountValidator\Exception;
+use Modules\Iwebhooks\Services\DispatchService;
 
 class HookApiController extends BaseCrudController
 {
@@ -22,41 +23,19 @@ class HookApiController extends BaseCrudController
   }
 
 
-  public function runWebhook($criteria, Request $request)
+  public function dispatch($criteria, Request $request)
   {
-    \DB::beginTransaction();
-    try {
-      //Get Parameters from request
-      $params = $this->getParamsRequest($request);
+    $service = new DispatchService();
 
-      //Request data to Repository
-      $model = $this->modelRepository->getItem($criteria, $params);
+    //Get Parameters from request
+    $params = $this->getParamsRequest($request);
 
-      //Throw exception if no found item
-      if (!$model) throw new Exception('Item not found', 204);
+    $data = $service->dispatchWebhook($criteria, $params);
 
-      if ($model->is_loading == 1) throw new Exception('Item is running', 204);
-
-      $model->update(['is_loading' => 1]);
-      $client = new \GuzzleHttp\Client();
-
-      //Response
-      $response = $client->request($model->http_method,
-        $model->endpoint,
-        [
-          "body" => json_encode($model->body),
-          'headers' => $model->headers
-        ]
-      );
-
-      \DB::commit(); //Commit to Data Base
-    } catch (\Exception $e) {
-      \DB::rollback();//Rollback to Data Base
-      $status = $this->getStatusError($e->getCode());
-      $response = ["errors" => $e->getMessage()];
-    }
+    $status = $data['code'] ?? 200;
+    if($status != 200) $status = $this->getStatusError($status);
 
     //Return response
-    return response()->json($response ?? ["data" => "Request successful"], $status ?? 200);
+    return response()->json($data['response'] ?? ["data" => "Request successful"], $status ?? 200);
   }
 }
