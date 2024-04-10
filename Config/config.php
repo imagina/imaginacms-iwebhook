@@ -2,9 +2,9 @@
 
 return [
   "httpMethodsOptions" => [
-    ["label" => 'GET', "id" => 'GET'],
-    ["label" => 'POST', "id" => 'POST'],
-    ["label" => 'PUT', "id" => 'PUT'],
-    ["label" => 'DELETE', "id" => 'DELETE']
+    ["label" => 'GET', "value" => 'GET'],
+    ["label" => 'POST', "value" => 'POST'],
+    ["label" => 'PUT', "value" => 'PUT'],
+    ["label" => 'DELETE', "value" => 'DELETE']
   ]
 ];
