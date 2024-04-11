@@ -13,6 +13,7 @@ class DispatchService
     $model = null;
     $code = null;
     try {
+      //Instance hook repository
       $modelRepository = app('Modules\Iwebhooks\Repositories\HookRepository');
       //Request data to Repository
       $model = $modelRepository->getItem($criteria, $params);
@@ -20,6 +21,7 @@ class DispatchService
       //Throw exception if no found item
       if (!$model) throw new Exception('Item not found', 204);
 
+      //Check if running the hook
       if ($model->is_loading == 1) throw new Exception('Item is running', 204);
 
       //Start sync
@@ -44,8 +46,9 @@ class DispatchService
 
       //Finish sync
       $model->update(['is_loading' => 0]);
-
+      \Log::info("Dispatch Service Successfully");
     } catch (\Exception $e) {
+      \Log::info("Dispatch Service error: {$e->getMessage()}");
       $code = $e->getCode();
       if ($code != 204 && $model) $model->update(['is_loading' => 0]);
       $response = ["errors" => $e->getMessage()];

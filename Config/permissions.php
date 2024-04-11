@@ -16,6 +16,7 @@ return [
         'edit' => 'iwebhooks::hooks.edit resource',
         'destroy' => 'iwebhooks::hooks.destroy resource',
         'restore' => 'iwebhooks::hooks.restore resource',
+        'dispatch' => 'iwebhooks::hooks.dispatch resource',
     ],
     'iwebhooks.logs' => [
         'manage' => 'iwebhooks::logs.manage resource',

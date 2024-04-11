@@ -8,7 +8,8 @@
     "providers": [
         "Modules\\Iwebhooks\\Providers\\IwebhooksServiceProvider",
         "Modules\\Iwebhooks\\Providers\\EventServiceProvider",
-        "Modules\\Iwebhooks\\Providers\\RouteServiceProvider"
+        "Modules\\Iwebhooks\\Providers\\RouteServiceProvider",
+        "Modules\\Iwebhooks\\Providers\\ScheduleServiceProvider"
     ],
     "aliases": {},
     "files": [],
