@@ -24,9 +24,7 @@ class ScheduleServiceProvider extends ServiceProvider
         $hooks = $modelRepository->getItemsBy(json_decode(json_encode($params)));
         //Loop hooks
         foreach ($hooks as $hook) {
-          \Log::info("Hook {$hook->id}");
           $schedule->call(function () use ($hook) {
-            \Log::info("Schedule {$hook->id} Crone: */{$hook->call_every_minutes} * * * *");
             \Modules\Iwebhooks\Jobs\DispatchWebhooks::dispatch($hook->id);
           })->cron("*/{$hook->call_every_minutes} * * * *");
         }

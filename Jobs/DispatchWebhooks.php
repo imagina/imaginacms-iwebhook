@@ -32,8 +32,6 @@ class DispatchWebhooks implements ShouldQueue
     public function handle()
     {
       $service = new DispatchService();
-      $data = $service->dispatchWebhook($this->hookId, []);
-
-      \Log::info("Hook With ID: {$this->hookId} run");
+      $service->dispatchWebhook($this->hookId, []);
     }
 }

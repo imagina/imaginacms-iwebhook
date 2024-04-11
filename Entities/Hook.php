@@ -4,10 +4,11 @@ namespace Modules\Iwebhooks\Entities;
 
 use Astrotomic\Translatable\Translatable;
 use Modules\Core\Icrud\Entities\CrudModel;
+use Modules\Ifillable\Traits\isFillable;
 
 class Hook extends CrudModel
 {
-  use Translatable;
+  use Translatable, isFillable;
 
   protected $table = 'iwebhooks__hooks';
   public $transformer = 'Modules\Iwebhooks\Transformers\HookTransformer';

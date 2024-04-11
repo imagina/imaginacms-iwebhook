@@ -28,27 +28,37 @@ class DispatchService
       $model->update(['is_loading' => 1]);
       $client = new \GuzzleHttp\Client();
 
-      //Response of hook
-      $responseHook = $client->request($model->http_method,
-        $model->endpoint,
-        [
-          "body" => json_encode($model->body),
-          'headers' => $model->headers
-        ]
-      );
+      $createLog = ['hook_id' => $model->id];
 
-      //Create log with statusCode and response
-      Log::create([
-        'response' => $responseHook->getBody()->getContents() ?? 'No content',
-        'http_status' => $responseHook->getStatusCode(),
-        'hook_id' => $model->id
-      ]);
+      //Validate request
+      try {
+        //Response of hook
+        $responseHook = $client->request($model->http_method,
+          $model->endpoint,
+          [
+            "body" => json_encode($model->body),
+            'headers' => $model->headers
+          ]
+        );
+
+        //Save data of response
+        $createLog['response'] = $responseHook->getBody()->getContents() ?? 'No content';
+        //Save data of code http
+        $createLog['http_status'] = $responseHook->getStatusCode();
+      } catch (\Exception $e) {
+        //Save data of response
+        $createLog['response'] = $e->getMessage() ?? 'No content';
+        //Save data of code http
+        $createLog['http_status'] = $e->getCode();
+      }
+      //Create log with statusCode, response and hookId
+      Log::create($createLog);
 
       //Finish sync
       $model->update(['is_loading' => 0]);
-      \Log::info("Dispatch Service Successfully");
+      \Log::info("DispatchService::Hook With ID: {$model->id} run Successfully");
     } catch (\Exception $e) {
-      \Log::info("Dispatch Service error: {$e->getMessage()}");
+      \Log::info("DispatchService::Error: (Hook-{$model->id}) {$e->getMessage()}");
       $code = $e->getCode();
       if ($code != 204 && $model) $model->update(['is_loading' => 0]);
       $response = ["errors" => $e->getMessage()];
