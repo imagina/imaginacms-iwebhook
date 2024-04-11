@@ -68,14 +68,21 @@ class Hook extends CrudModel
     return $this->belongsTo(Country::class)->with('translations');
   }
 
-  public function getStatusLabelAttribute() {
+  public function getStatusInfoAttribute() {
+    $defaultInfo = [
+      'label' => trans('iwebhooks::cms.label.noRegistration'),
+      'color' => '#856404',
+    ];
     if ($this->relationLoaded('log')) {
       if(isset($this->log)) {
-        return $this->log->http_status == 200
-          ? trans('iwebhooks::cms.label.online')
-          : trans('iwebhooks::cms.label.offline');
+        if($this->log->http_status == 200) {
+          $defaultInfo = [
+            'label' => trans('iwebhooks::cms.label.online'),
+            'color' => '#28a745',
+          ];
+        } else $defaultInfo['label'] = trans('iwebhooks::cms.label.offline');
       }
     }
-    return trans('iwebhooks::cms.label.noRegistration');
+    return $defaultInfo;
   }
 }
