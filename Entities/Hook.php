@@ -41,7 +41,8 @@ class Hook extends CrudModel
     'is_loading',
     'call_every_minutes',
     'category_id',
-    'country_id'
+    'country_id',
+    'redirect_link'
   ];
 
   protected $casts = [
@@ -65,5 +66,16 @@ class Hook extends CrudModel
   public function country()
   {
     return $this->belongsTo(Country::class)->with('translations');
+  }
+
+  public function getStatusLabelAttribute() {
+    if ($this->relationLoaded('log')) {
+      if(isset($this->log)) {
+        return $this->log->http_status == 200
+          ? trans('iwebhooks::cms.label.online')
+          : trans('iwebhooks::cms.label.offline');
+      }
+    }
+    return trans('iwebhooks::cms.label.noRegistration');
   }
 }

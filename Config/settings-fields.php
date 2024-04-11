@@ -7,7 +7,7 @@ return [
     'name' => 'iwebhooks::activateDispatchWebhooksJob',
     'type' => 'checkbox',
     'props' => [
-      'label' => 'Activar Job de llamar webhooks cada cierto tiempo',
+      'label' => 'iwebhooks::cms.label.activateWebhookJob',
       'trueValue' => "1",
       'falseValue' => "0",
     ]

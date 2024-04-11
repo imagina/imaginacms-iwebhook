@@ -8,7 +8,11 @@ return [
     "adminLogs" => "Logs"
   ],
   "label" => [
-    "dispatch" => "Dispatch"
+    "dispatch" => "Dispatch",
+    "noRegistration" => "No registration",
+    "offline" => "Offline",
+    "online" => "Online",
+    "activateWebhookJob" => "Enable periodic webhook calls"
   ],
   "form" => [
     "httpMethod" => "HTTP Method",
@@ -18,7 +22,8 @@ return [
     "actionLabel" => "Action Label",
     "callEveryMinutes" => "Call Every Minute",
     "body" => "Request Body",
-    "headers" => "Request Header"
+    "headers" => "Request Header",
+    "redirectLink" => "Redirect link"
   ],
   "title" => [
     "newCategory" => "New Category",

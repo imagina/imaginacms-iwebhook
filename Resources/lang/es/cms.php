@@ -8,7 +8,11 @@ return [
     "adminLogs" => "Registros"
   ],
   "label" => [
-    "dispatch" => "Ejecutar"
+    "dispatch" => "Ejecutar",
+    "noRegistration" => "Sin Registro",
+    "offline" => "Desconectado",
+    "online" => "Conectado",
+    "activateWebhookJob" => "Activar llamadas periódicas a webhooks"
   ],
   "form" => [
     "httpMethod" => "Metodo HTTP",
@@ -18,7 +22,8 @@ return [
     "actionLabel" => "Label de acción",
     "callEveryMinutes" => "Llamada cada minuto",
     "body" => "Cuerpo de la solicitud",
-    "headers" => "Encabezado de la solicitud"
+    "headers" => "Encabezado de la solicitud",
+    "redirectLink" => "Enlace de redirección"
   ],
   "title" => [
     "newCategory" => "Nueva Categoría",

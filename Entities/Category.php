@@ -35,4 +35,9 @@ class Category extends CrudModel
     'system_name',
     'status'
   ];
+
+  public function hooks()
+  {
+    return $this->hasMany(Hook::class, 'category_id');
+  }
 }
