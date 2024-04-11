@@ -5,6 +5,7 @@ namespace Modules\Iwebhooks\Entities;
 use Astrotomic\Translatable\Translatable;
 use Modules\Core\Icrud\Entities\CrudModel;
 use Modules\Ifillable\Traits\isFillable;
+use Modules\Ilocations\Entities\Country;
 
 class Hook extends CrudModel
 {
@@ -39,7 +40,8 @@ class Hook extends CrudModel
     'headers',
     'is_loading',
     'call_every_minutes',
-    'category_id'
+    'category_id',
+    'country_id'
   ];
 
   protected $casts = [
@@ -58,5 +60,10 @@ class Hook extends CrudModel
 
   public function log() {
     return $this->hasOne(Log::class)->latestOfMany();
+  }
+
+  public function country()
+  {
+    return $this->belongsTo(Country::class)->with('translations');
   }
 }
