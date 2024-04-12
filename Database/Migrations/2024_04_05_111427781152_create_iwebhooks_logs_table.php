@@ -33,6 +33,9 @@ class CreateIwebhooksLogsTable extends Migration
      */
     public function down()
     {
+      Schema::table('iwebhooks__logs', function (Blueprint $table) {
+        $table->dropForeign(['hook_id']); // Drop foreign key constraint
+      });
         Schema::dropIfExists('iwebhooks__logs');
     }
 }
