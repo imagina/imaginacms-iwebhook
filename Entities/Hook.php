@@ -59,7 +59,7 @@ class Hook extends CrudModel
     return $this->hasMany(Log::class);
   }
 
-  public function log() {
+  public function lastLog() {
     return $this->hasOne(Log::class)->latestOfMany();
   }
 
@@ -71,18 +71,22 @@ class Hook extends CrudModel
   public function getStatusInfoAttribute() {
     $defaultInfo = [
       'label' => trans('iwebhooks::cms.label.noRegistration'),
-      'color' => '#856404',
+      'color' => '#6c757d',
+      'class' => "offline",
+      'textColor' => "#ffff"
     ];
-    if ($this->relationLoaded('log')) {
-      if(isset($this->log)) {
-        if($this->log->http_status == 200) {
+    if ($this->relationLoaded('lastLog')) {
+      if(isset($this->lastLog)) {
+        if($this->lastLog->http_status == 200) {
           $defaultInfo = [
             'label' => trans('iwebhooks::cms.label.online'),
             'color' => '#28a745',
+            'class' => "online",
+            'textColor' => "#ffff"
           ];
         } else $defaultInfo['label'] = trans('iwebhooks::cms.label.offline');
       }
     }
-    return $defaultInfo;
+    return (object) $defaultInfo;
   }
 }
