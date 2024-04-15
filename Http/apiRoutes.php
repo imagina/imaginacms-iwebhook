@@ -2,7 +2,7 @@
 
 use Illuminate\Routing\Router;
 
-$router->group(['prefix' =>'/iwebhooks/v1'], function (Router $router) {
+Route::prefix('/iwebhooks/v1')->group(function (Router $router) {
     $router->apiCrud([
       'module' => 'iwebhooks',
       'prefix' => 'categories',
