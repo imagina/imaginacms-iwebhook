@@ -12,7 +12,8 @@ return [
     "noRegistration" => "No registration",
     "offline" => "Offline",
     "online" => "Online",
-    "activateWebhookJob" => "Enable periodic webhook calls"
+    "activateWebhookJob" => "Enable periodic webhook calls",
+    "helpFieldEndpoint" => "If the endpoint is an IP type and requires a ping check, the port should be specified. By default, the port is 80... For example: 127.127.0.0:4000."
   ],
   "form" => [
     "httpMethod" => "HTTP Method",
