@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIwebhooksLogsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -38,4 +38,4 @@ class CreateIwebhooksLogsTable extends Migration
       });
         Schema::dropIfExists('iwebhooks__logs');
     }
-}
+};

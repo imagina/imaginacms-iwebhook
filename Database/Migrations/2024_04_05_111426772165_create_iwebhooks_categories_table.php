@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIwebhooksCategoriesTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -34,4 +34,4 @@ class CreateIwebhooksCategoriesTable extends Migration
     {
         Schema::dropIfExists('iwebhooks__categories');
     }
-}
+};
