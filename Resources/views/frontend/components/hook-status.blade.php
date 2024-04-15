@@ -94,11 +94,6 @@
             info: {!! $info ? 'true' : 'false' !!},
             lengthChange: {!! $lengthChange ? 'true' : 'false' !!},
             pagingType: "{{$pagingType}}",
-            /*columnDefs: [
-                { "width": "20%", "targets": 0 }, // Primer columna
-                { "width": "40%", "targets": 1 }, // Segunda columna
-                { "width": "20%", "targets": 2 },
-            ],*/
             lengthMenu: {!! $lengthMenu !!},
             columnDefs: {!! $columnDefs !!},
         });
