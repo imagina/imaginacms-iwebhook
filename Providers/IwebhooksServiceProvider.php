@@ -45,6 +45,7 @@ class IwebhooksServiceProvider extends ServiceProvider
         $this->mergeConfigFrom($this->getModuleConfigFilePath('iwebhooks', 'settings'), "asgard.iwebhooks.settings");
         $this->mergeConfigFrom($this->getModuleConfigFilePath('iwebhooks', 'settings-fields'), "asgard.iwebhooks.settings-fields");
         $this->mergeConfigFrom($this->getModuleConfigFilePath('iwebhooks', 'permissions'), "asgard.iwebhooks.permissions");
+        $this->mergeConfigFrom($this->getModuleConfigFilePath('iwebhooks', 'blocks'), "asgard.iwebhooks.blocks");
 
         //$this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
@@ -103,5 +104,11 @@ class IwebhooksServiceProvider extends ServiceProvider
 
     }
 
+    /**
+     * Register Blade components
+     */
 
+    private function registerComponents(){
+        Blade::componentNamespace("Modules\Iwebhooks\View\Components", 'iwebhooks');
+    }
 }

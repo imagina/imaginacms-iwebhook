@@ -14,6 +14,9 @@ return [
         'create hook' => 'Create a hook',
     ],
     'table' => [
+        'status' => 'Status',
+        'country' => 'Country',
+        'address' => 'Address',
     ],
     'form' => [
     ],
