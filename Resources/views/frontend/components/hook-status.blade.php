@@ -26,7 +26,7 @@
                     @if($hook->redirect_link)
                     <a href="{{$hook->redirect_link}}" target="{{$linkTarget}}" class="link text-decoration-none">
                     @endif
-                    {{$hook->endpoint}}
+                        {{$hook->hookInfo->hook ?? ''}}{{$hook->hookInfo->port ? ':'.$hook->hookInfo->port : ''}}
                     @if($hook->redirect_link)
                     </a>
                     @endif
