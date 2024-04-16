@@ -71,11 +71,11 @@ class HookStatus extends Component
                                 $colorLink = "#333333",
                                 $paging = false,
                                 $ordering = false,
-                                $searching = true,
+                                $searching = false,
                                 $info = false,
                                 $lengthChange = false,
                                 $pagingType = 'simple_numbers',
-                                $datatables = true,
+                                $datatables = false,
                                 $columnDefs = null,
                                 $lengthMenu = null
     )
