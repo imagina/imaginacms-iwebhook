@@ -9,7 +9,7 @@
             <thead class="{{$theadClasses}}">
             <tr>
                 <th scope="col">{{trans('iwebhooks::hooks.table.status')}}</th>
-                <th scope="col">{{trans('iwebhooks::hooks.table.hook')}}</th>
+                <th scope="col">{{trans('iwebhooks::hooks.table.title')}}</th>
                 <th scope="col">{{trans('iwebhooks::hooks.table.country')}}</th>
                 <th scope="col">{{trans('iwebhooks::hooks.table.address')}}</th>
             </tr>
