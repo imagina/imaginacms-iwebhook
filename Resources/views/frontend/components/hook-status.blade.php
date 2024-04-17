@@ -9,6 +9,7 @@
             <thead class="{{$theadClasses}}">
             <tr>
                 <th scope="col">{{trans('iwebhooks::hooks.table.status')}}</th>
+                <th scope="col">{{trans('iwebhooks::hooks.table.hook')}}</th>
                 <th scope="col">{{trans('iwebhooks::hooks.table.country')}}</th>
                 <th scope="col">{{trans('iwebhooks::hooks.table.address')}}</th>
             </tr>
@@ -21,12 +22,13 @@
                       {{$hook->statusInfo->label}}
                     </span>
                 </td>
+                <td>{{$hook->title ?? ''}}</td>
                 <td>{{$hook->country->name ?? ''}}</td>
                 <td>
                     @if($hook->redirect_link)
                     <a href="{{$hook->redirect_link}}" target="{{$linkTarget}}" class="link text-decoration-none">
                     @endif
-                    {{$hook->endpoint}}
+                        {{$hook->hookInfo->hook ?? ''}}
                     @if($hook->redirect_link)
                     </a>
                     @endif

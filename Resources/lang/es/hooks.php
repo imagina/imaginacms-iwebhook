@@ -17,6 +17,7 @@ return [
         'status' => 'Status',
         'country' => 'Pais',
         'address' => 'Dirección',
+        'hook' => 'Hook',
     ],
     'form' => [
     ],
