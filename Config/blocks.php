@@ -234,7 +234,7 @@ return [
                     ],
                     "columnDefs" => [
                         "name" => "columnDefs",
-                        "value" => [["width" => "auto", "targets" => "0"],["width" => "auto", "targets" => "1"],["width" => "auto", "targets" => "2"]],
+                        "value" => [["width" => "auto", "targets" => "0"],["width" => "auto", "targets" => "1"],["width" => "auto", "targets" => "2"],["width" => "auto", "targets" => "3"]],
                         "type" => "json",
                         'columns' => 'col-12',
                         "props" => [
