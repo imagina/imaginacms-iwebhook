@@ -31,7 +31,8 @@ class Hook extends CrudModel
   public $translatedAttributes = [
     'title',
     'description',
-    'action_label'
+    'action_label',
+    'mask_endpoint'
   ];
   protected $fillable = [
     'endpoint',
