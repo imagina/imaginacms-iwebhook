@@ -24,7 +24,8 @@ return [
     "callEveryMinutes" => "Call Every Minute",
     "body" => "Request Body",
     "headers" => "Request Header",
-    "redirectLink" => "Redirect link"
+    "redirectLink" => "Redirect link",
+    "maskHook" => "Mask hook"
   ],
   "title" => [
     "newCategory" => "New Category",

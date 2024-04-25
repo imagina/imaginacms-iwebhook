@@ -24,7 +24,8 @@ return [
     "callEveryMinutes" => "Llamada cada minuto",
     "body" => "Cuerpo de la solicitud",
     "headers" => "Encabezado de la solicitud",
-    "redirectLink" => "Enlace de redirección"
+    "redirectLink" => "Enlace de redirección",
+    "maskHook" => "Mascara del hook"
   ],
   "title" => [
     "newCategory" => "Nueva Categoría",
