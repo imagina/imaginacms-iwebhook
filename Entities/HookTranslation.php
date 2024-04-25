@@ -11,7 +11,7 @@ class HookTranslation extends Model
       'title',
       'description',
       'action_label',
-      'mask_hook'
+      'mask_endpoint'
     ];
     protected $table = 'iwebhooks__hook_translations';
 }

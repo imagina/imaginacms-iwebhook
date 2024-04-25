@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddMaskHookInHookTanslationTable extends Migration
+class AddMaskEndpointInHookTanslationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddMaskHookInHookTanslationTable extends Migration
     public function up()
     {
         Schema::table('iwebhooks__hook_translations', function (Blueprint $table) {
-          $table->text('mask_hook')->nullable()->after('title');
+          $table->text('mask_endpoint')->nullable()->after('title');
         });
     }
 
@@ -26,7 +26,7 @@ class AddMaskHookInHookTanslationTable extends Migration
     public function down()
     {
         Schema::table('iwebhooks__hook_translations', function (Blueprint $table) {
-          $table->dropColumn('mask_hook');
+          $table->dropColumn('mask_endpoint');
         });
     }
 }

@@ -25,7 +25,7 @@ return [
     "body" => "Cuerpo de la solicitud",
     "headers" => "Encabezado de la solicitud",
     "redirectLink" => "Enlace de redirección",
-    "maskHook" => "Mascara del hook"
+    "maskEndpoint" => "Mascara de la url"
   ],
   "title" => [
     "newCategory" => "Nueva Categoría",

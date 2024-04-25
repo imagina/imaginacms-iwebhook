@@ -25,7 +25,7 @@ return [
     "body" => "Request Body",
     "headers" => "Request Header",
     "redirectLink" => "Redirect link",
-    "maskHook" => "Mask hook"
+    "maskEndpoint" => "Endpoint Mask"
   ],
   "title" => [
     "newCategory" => "New Category",

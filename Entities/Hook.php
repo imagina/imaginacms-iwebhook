@@ -32,7 +32,7 @@ class Hook extends CrudModel
     'title',
     'description',
     'action_label',
-    'mask_hook'
+    'mask_endpoint'
   ];
   protected $fillable = [
     'endpoint',
