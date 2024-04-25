@@ -28,9 +28,10 @@
                     @if($hook->redirect_link)
                     <a href="{{$hook->redirect_link}}" target="{{$linkTarget}}" class="link text-decoration-none">
                     @endif
-                        {{$hook->hookInfo->hook ?? ''}}
+                        {{$hook->mask_endpoint ?? $hook->hookInfo->hook ?? ''}}
                     @if($hook->redirect_link)
                     </a>
+
                     @endif
                 </td>
             </tr>
