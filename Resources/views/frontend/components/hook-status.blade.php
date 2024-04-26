@@ -23,7 +23,12 @@
                     </span>
                 </td>
                 <td>{{$hook->title ?? ''}}</td>
-                <td>{{$hook->country->name ?? ''}}</td>
+                <td>
+                    <div class="d-flex justify-content-center">
+                        <img class="icon-flag {{$iconPosition=="left" ? 'order-0 mr-1':'order-1 ml-1' }}" src="{{$hook->country->flagUrl}}" alt="{{$hook->country->name ?? ''}}">
+                        <span>{{$hook->country->name ?? ''}}</span>
+                    </div>
+                </td>
                 <td>
                     @if($hook->redirect_link)
                     <a href="{{$hook->redirect_link}}" target="{{$linkTarget}}" class="link text-decoration-none">
@@ -67,6 +72,12 @@
       {!! $tbodyStyles !!}
     }
     @endif
+    & .icon-flag {
+        width: {{$iconWidth}};
+        @if(!empty($iconStyle))
+            {!! $iconStyle !!}
+        @endif
+    }
 }
 </style>
 @if($datatables)
