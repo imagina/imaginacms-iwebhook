@@ -31,7 +31,8 @@ class Hook extends CrudModel
   public $translatedAttributes = [
     'title',
     'description',
-    'action_label'
+    'action_label',
+    'mask_endpoint'
   ];
   protected $fillable = [
     'endpoint',
@@ -88,5 +89,25 @@ class Hook extends CrudModel
       }
     }
     return (object) $defaultInfo;
+  }
+
+  public function getHookInfoAttribute() {
+    $default = [
+      'hook' => $this->endpoint,
+      'port' => null,
+    ];
+    // Split the address by ":"
+    $parts = explode(':', $this->endpoint);
+
+    // If there's only one part, then no port is specified
+    if ((bool)ip2long($parts[0]) && count($parts) > 1) {
+      // Get the port from the second part
+      $default = [
+        'hook' => $parts[0],
+        'port' => $parts[1],
+      ];
+    }
+
+    return (object) $default;
   }
 }

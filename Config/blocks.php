@@ -64,6 +64,41 @@ return [
                     ],
                 ]
             ],
+            "flag" => [
+              "title" => "Bandera",
+              "fields" => [
+                "iconWidth" => [
+                  "name" => "iconWidth",
+                  "value" => "15px",
+                  "type" => "input",
+                  "props" => [
+                    "label" => "Ancho",
+                  ]
+                ],
+                "iconPosition" => [
+                  "name" => "iconPosition",
+                  "value" => "left",
+                  "type" => "select",
+                  "props" => [
+                    "label" => "Posición",
+                    "options" => [
+                      ["label" => "Izquierda", "value" => "left"],
+                      ["label" => "Derecha", "value" => "right"]
+                    ]
+                  ]
+                ],
+                "iconStyle" => [
+                  "name" => "iconStyle",
+                  "columns" => "col-12",
+                  "type" => "input",
+                  "props" => [
+                    "label" => "Estilo",
+                    'type' => 'textarea',
+                    'rows' => 4,
+                  ]
+                ],
+              ]
+            ],
             "table" => [
                 "title" => "Tabla",
                 "fields" => [
