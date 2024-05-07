@@ -17,7 +17,7 @@ return new class extends Migration
             $table->increments('id');
             // Your fields...
             $table->text('endpoint');
-            $table->text('http_method')->default('POST');
+            $table->string('http_method')->default('POST');
             $table->json('body')->nullable();
             $table->json('headers')->nullable();
             $table->boolean('is_loading')->default(0)->nullable();
