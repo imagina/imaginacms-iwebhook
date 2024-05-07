@@ -12,7 +12,8 @@ return [
     "noRegistration" => "Sin Registro",
     "offline" => "Desconectado",
     "online" => "Conectado",
-    "activateWebhookJob" => "Activar llamadas periódicas a webhooks"
+    "activateWebhookJob" => "Activar llamadas periódicas a webhooks",
+    "helpFieldEndpoint" => "Si el endpoint es de tipo IP y requiere una verificación de ping, es necesario especificar el puerto. Por defecto, el puerto es 80... Por ejemplo: 127.127.0.0:4000"
   ],
   "form" => [
     "httpMethod" => "Metodo HTTP",
@@ -23,7 +24,8 @@ return [
     "callEveryMinutes" => "Llamada cada minuto",
     "body" => "Cuerpo de la solicitud",
     "headers" => "Encabezado de la solicitud",
-    "redirectLink" => "Enlace de redirección"
+    "redirectLink" => "Enlace de redirección",
+    "maskEndpoint" => "Mascara de la url"
   ],
   "title" => [
     "newCategory" => "Nueva Categoría",

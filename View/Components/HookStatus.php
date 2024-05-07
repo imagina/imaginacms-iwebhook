@@ -44,6 +44,9 @@ class HookStatus extends Component
     public $datatables;
     public $columnDefs;
     public $lengthMenu;
+    public $iconStyle;
+    public $iconPosition;
+    public $iconWidth;
 
     public function __construct($id = null,
                                 $params = [],
@@ -77,7 +80,10 @@ class HookStatus extends Component
                                 $pagingType = 'simple_numbers',
                                 $datatables = true,
                                 $columnDefs = null,
-                                $lengthMenu = null
+                                $lengthMenu = null,
+                                $iconPosition = "left",
+                                $iconWidth = "15px",
+                                $iconStyle = null
     )
     {
         $this->id = $id ?? uniqid('hooks');
@@ -112,7 +118,10 @@ class HookStatus extends Component
         $this->pagingType = $pagingType;
         $this->datatables = $datatables;
         $this->lengthMenu = json_encode($lengthMenu ?? [ [10, 25, 50, -1], [10, 25, 50, "All"] ]);
-        $this->columnDefs = json_encode($columnDefs ?? [["width" => "auto", "targets" => "0"],["width" => "auto", "targets" => "1"],["width" => "auto", "targets" => "2"]]);
+        $this->columnDefs = json_encode($columnDefs ?? [["width" => "auto", "targets" => "0"],["width" => "auto", "targets" => "1"],["width" => "auto", "targets" => "2"],["width" => "auto", "targets" => "3"]]);
+        $this->iconStyle = $iconStyle;
+        $this->iconPosition = $iconPosition;
+        $this->iconWidth = $iconWidth;
         $this->getHooks();
     }
 
