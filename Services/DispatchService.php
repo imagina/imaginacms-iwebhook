@@ -31,7 +31,7 @@ class DispatchService
 
       $publicURL = setting("iwebhooks::urlPublicWebhook", null, false);
 
-      if (!$publicURL) {
+      if ($publicURL) {
         $client = new \GuzzleHttp\Client();
 
         //Validate request
