@@ -29,39 +29,32 @@ class DispatchService
       $model->update(['is_loading' => 1]);
       $createLog = ['hook_id' => $model->id];
 
-      if($model->http_method == 'PING') {
-        // Get the IP and PORT
-        $host = explode(":", $model->endpoint);
-        $ip = $host[0] ?? null;
-        $port = $host[1] ?? 80;
+      $publicURL = setting("iwebhooks::urlPublicWebhook", null, false);
 
-        $responsePing = $this->isIPOnline($ip, $port);
-        $createLog = array_merge($createLog, $responsePing);
-      } else {
+      if (!$publicURL) {
         $client = new \GuzzleHttp\Client();
 
         //Validate request
         try {
+          $params = ["attributes" => $model->getAttributes()];
+
           //Response of hook
-          $responseHook = $client->request($model->http_method,
-            $model->endpoint,
+          $responseHook = $client->request('POST',
+            "{$publicURL}/api/iwebhooks/v1/hooks/tunnel",
             [
-              "body" => json_encode($model->body),
-              'headers' => $model->headers
+              'body' => json_encode($params),
+              'headers' => [
+                'Content-Type' => 'application/json',
+              ]
             ]
           );
 
-          //Save data of response
-          $createLog['response'] = $responseHook->getBody()->getContents() ?? 'No content';
-          //Save data of code http
-          $createLog['http_status'] = $responseHook->getStatusCode();
+          $createLog = array_merge($createLog, $this->processGuzzleResponse($responseHook));
         } catch (\Exception $e) {
-          //Save data of response
-          $createLog['response'] = $e->getMessage() ?? 'No content';
-          //Save data of code http
-          $createLog['http_status'] = $e->getCode();
+          $createLog = array_merge($createLog, $this->processGuzzleResponse($e, true));
         }
-
+      } else {
+        $createLog = array_merge($createLog, $this->getResponseWebhook($model));
       }
 
       //Create log with statusCode, response and hookId
@@ -80,7 +73,44 @@ class DispatchService
     return ['response' => $response, 'code' => $code];
   }
 
-  public function isIPOnline($ip, $port = 80, $timeout = 10) {
+  public function getResponseWebhook($data)
+  {
+    $response = [];
+    if (!isset($data->http_method)) throw new Exception('Bad format data', 400);
+
+    if ($data->http_method == 'PING') {
+      // Get the IP and PORT
+      $host = explode(":", $data->endpoint);
+      $ip = $host[0] ?? null;
+      $port = $host[1] ?? 80;
+
+      $response = $this->isIPOnline($ip, $port);
+    } else {
+      $client = new \GuzzleHttp\Client();
+
+      //Validate request
+      try {
+        //Response of hook
+        $responseHook = $client->request($data->http_method,
+          $data->endpoint,
+          [
+            "body" => json_encode($data->body),
+            'headers' => $data->headers
+          ]
+        );
+
+        $response = $this->processGuzzleResponse($responseHook);
+      } catch (\Exception $e) {
+        $response = $this->processGuzzleResponse($e, true);
+      }
+
+    }
+
+    return $response;
+  }
+
+  public function isIPOnline($ip, $port = 80, $timeout = 10)
+  {
     $connection = @fsockopen($ip, $port, $errno, $errstr, $timeout);
 
     if (is_resource($connection)) {
@@ -98,4 +128,20 @@ class DispatchService
       ];
     }
   }
+
+  private function processGuzzleResponse($response, $isError = false)
+  {
+    if ($isError) {
+      return [
+        'response' => $response->getMessage() ?? 'No content', // Save data of response
+        'http_status' => $response->getCode() // Save data of HTTP code
+      ];
+    } else {
+      return [
+        'response' => $response->getBody()->getContents() ?? 'No content', // Save data of response
+        'http_status' => $response->getStatusCode() // Save data of HTTP code
+      ];
+    }
+  }
+
 }

@@ -38,4 +38,26 @@ class HookApiController extends BaseCrudController
     //Return response
     return response()->json($data['response'] ?? ["data" => "Request successful"], $status ?? 200);
   }
+
+
+  public function tunnel(Request $request)
+  {
+    $service = new DispatchService();
+    $webhookData = $request->input('attributes') ?? [];
+    $data = [];
+
+    try {
+      $data = $service->getResponseWebhook((object)$webhookData);
+
+      $status = $data['http_status'] ?? 200;
+    } catch (\Exception $e) {
+      //Save data of response
+      $data['response'] = $e->getMessage();
+      //Save data of code http
+      $status = $this->getStatusError($e->getCode());
+    }
+
+    //Return response
+    return response()->json($data['response'] ?? ["data" => "Request successful"], $status);
+  }
 }

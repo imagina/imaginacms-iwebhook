@@ -13,7 +13,8 @@ return [
     "offline" => "Desconectado",
     "online" => "Conectado",
     "activateWebhookJob" => "Activar llamadas periódicas a webhooks",
-    "helpFieldEndpoint" => "Si el endpoint es de tipo IP y requiere una verificación de ping, es necesario especificar el puerto. Por defecto, el puerto es 80... Por ejemplo: 127.127.0.0:4000"
+    "helpFieldEndpoint" => "Si el endpoint es de tipo IP y requiere una verificación de ping, es necesario especificar el puerto. Por defecto, el puerto es 80... Por ejemplo: 127.127.0.0:4000",
+    "publicWebhook" => "Tunnel / Webhook"
   ],
   "form" => [
     "httpMethod" => "Metodo HTTP",
