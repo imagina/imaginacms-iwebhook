@@ -28,6 +28,12 @@ $router->group(['prefix' =>'/iwebhooks/v1'], function (Router $router) {
           'path' => '/dispatch/{criteria}', // Route Path
           'uses' => 'dispatch', //Name of the controller method to use
           //'middleware' => [] // if not set up middleware, auth:api will be the default
+        ],
+        [
+          'method' => 'post',
+          'path' => '/tunnel',
+          'uses' => 'tunnel',
+          'middleware' => []
         ]
       ]
     ]);

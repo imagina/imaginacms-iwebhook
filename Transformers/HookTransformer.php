@@ -13,6 +13,8 @@ class HookTransformer extends CrudResource
   */
   public function modelAttributes($request)
   {
-    return [];
+    return [
+      'isLoading' => (int) $this->is_loading
+    ];
   }
 }

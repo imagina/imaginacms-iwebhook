@@ -12,4 +12,13 @@ return [
       'falseValue' => "0",
     ]
   ],
+  'webhookUrl' => [
+    'value' => '',
+    "onlySuperAdmin" => true,
+    'name' => 'iwebhooks::urlPublicWebhook',
+    'type' => 'input',
+    'props' => [
+      'label' => 'iwebhooks::cms.label.publicWebhook'
+    ]
+  ],
 ];
