@@ -10,7 +10,8 @@ class HookTranslation extends Model
     protected $fillable = [
       'title',
       'description',
-      'action_label'
+      'action_label',
+      'mask_endpoint'
     ];
     protected $table = 'iwebhooks__hook_translations';
 }

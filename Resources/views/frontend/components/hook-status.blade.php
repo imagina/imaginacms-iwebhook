@@ -9,6 +9,7 @@
             <thead class="{{$theadClasses}}">
             <tr>
                 <th scope="col">{{trans('iwebhooks::hooks.table.status')}}</th>
+                <th scope="col">{{trans('iwebhooks::hooks.table.title')}}</th>
                 <th scope="col">{{trans('iwebhooks::hooks.table.country')}}</th>
                 <th scope="col">{{trans('iwebhooks::hooks.table.address')}}</th>
             </tr>
@@ -21,12 +22,18 @@
                       {{$hook->statusInfo->label}}
                     </span>
                 </td>
-                <td>{{$hook->country->name ?? ''}}</td>
+                <td>{{$hook->title ?? ''}}</td>
+                <td>
+                      <div class="d-flex justify-content-center">
+                          <img class="icon-flag {{$iconPosition=="left" ? 'order-0 mr-1':'order-1 ml-1' }}" src="{{$hook->country->flagUrl}}" alt="{{$hook->country->name ?? ''}}">
+                          <span>{{$hook->country->name ?? ''}}</span>
+                      </div>
+                </td>
                 <td>
                     @if($hook->redirect_link)
                     <a href="{{$hook->redirect_link}}" target="{{$linkTarget}}" class="link text-decoration-none">
                     @endif
-                    {{$hook->endpoint}}
+                    {{$hook->mask_endpoint ?? $hook->hookInfo->hook ?? ''}}
                     @if($hook->redirect_link)
                     </a>
                     @endif
@@ -63,6 +70,11 @@
     & tbody {
       {!! $tbodyStyles !!}
     }
+    @endif
+    & .icon-flag {
+        width: {{$iconWidth}};
+    @if(!empty($iconStyle))
+        {!! $iconStyle !!}
     @endif
 }
 </style>
