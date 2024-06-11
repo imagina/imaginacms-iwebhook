@@ -26,6 +26,18 @@ class Category extends CrudModel
     'deleting' => [],
     'deleted' => []
   ];
-  public $translatedAttributes = [];
-  protected $fillable = [];
+  public $translatedAttributes = [
+    'title',
+    'description',
+    'slug'
+  ];
+  protected $fillable = [
+    'system_name',
+    'status'
+  ];
+
+  public function hooks()
+  {
+    return $this->hasMany(Hook::class, 'category_id');
+  }
 }

@@ -27,5 +27,14 @@ class Log extends CrudModel
     'deleted' => []
   ];
   public $translatedAttributes = [];
-  protected $fillable = [];
+  protected $fillable = [
+    'response',
+    'http_status',
+    'hook_id'
+  ];
+
+  public function hook()
+  {
+    return $this->belongsTo(Hook::class)->with('translations');
+  }
 }

@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class HookTranslation extends Model
 {
     public $timestamps = false;
-    protected $fillable = [];
+    protected $fillable = [
+      'title',
+      'description',
+      'action_label',
+      'mask_endpoint'
+    ];
     protected $table = 'iwebhooks__hook_translations';
 }

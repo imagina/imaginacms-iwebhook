@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIwebhooksCategoriesTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +16,9 @@ class CreateIwebhooksCategoriesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             // Your fields...
-
+            $table->string('system_name')->unique()->nullable();
+            $table->integer('parent_id')->default(0)->nullable();
+            $table->integer('status')->default(1)->unsigned();
             // Audit fields
             $table->timestamps();
             $table->auditStamps();
@@ -32,4 +34,4 @@ class CreateIwebhooksCategoriesTable extends Migration
     {
         Schema::dropIfExists('iwebhooks__categories');
     }
-}
+};

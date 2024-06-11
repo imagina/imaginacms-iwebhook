@@ -3,10 +3,26 @@
 namespace Modules\Iwebhooks\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class CategoryTranslation extends Model
 {
-    public $timestamps = false;
-    protected $fillable = [];
-    protected $table = 'iwebhooks__category_translations';
+  use Sluggable;
+
+  public $timestamps = false;
+  protected $fillable = [
+    'title',
+    'description',
+    'slug'
+  ];
+  protected $table = 'iwebhooks__category_translations';
+
+  public function sluggable()
+  {
+    return [
+      'slug' => [
+        'source' => 'title'
+      ]
+    ];
+  }
 }

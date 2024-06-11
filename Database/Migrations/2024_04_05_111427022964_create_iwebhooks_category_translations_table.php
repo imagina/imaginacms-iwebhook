@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIwebhooksCategoryTranslationsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +16,9 @@ class CreateIwebhooksCategoryTranslationsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             // Your translatable fields
-
+            $table->text('title');
+            $table->text('description')->nullable();
+            $table->string('slug')->index();
             $table->integer('category_id')->unsigned();
             $table->string('locale')->index();
             $table->unique(['category_id', 'locale']);
@@ -36,4 +38,4 @@ class CreateIwebhooksCategoryTranslationsTable extends Migration
         });
         Schema::dropIfExists('iwebhooks__category_translations');
     }
-}
+};
