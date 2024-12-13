@@ -9,6 +9,7 @@ class EventType extends CrudStaticModel
   const CREATED = 1;
   const UPDATED = 2;
   const DELETED = 3;
+  const BULK = 4;
 
   public function __construct()
   {
@@ -24,6 +25,10 @@ class EventType extends CrudStaticModel
       self::DELETED => [
         'title' => trans('iwebhooks::statics.eventType.deleted'),
         'value' => 'eloquent.deleted:'
+      ],
+      self::BULK => [
+        'title' => trans('iwebhooks::statics.eventType.bulk'),
+        'value' => 'custom.bulk'
       ]
     ];
   }

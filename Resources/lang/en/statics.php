@@ -8,6 +8,7 @@ return [
   'eventType' => [
     'created' => "Record Created",
     'updated' => "Record Updated",
-    'deleted' => "Record Deleted"
+    'deleted' => "Record Deleted",
+    'bulk'    => 'Bulk'
   ]
 ];

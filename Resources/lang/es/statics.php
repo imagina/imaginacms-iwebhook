@@ -9,5 +9,6 @@ return [
     'created' => "Registro Creado",
     'updated' => "Registro Actualizado",
     'deleted' => "Registor Eliminado",
+    'bulk'    => 'Bulk'
   ]
 ];
