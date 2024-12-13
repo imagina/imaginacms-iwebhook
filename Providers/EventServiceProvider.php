@@ -17,7 +17,6 @@ class EventServiceProvider extends ServiceProvider
     //Get the event hooks to listen for events
     $requestParams = array("filter" => ['type_id' => 1, 'status' => 1]);
     $hooks = $hookRepository->getItemsBy(json_decode(json_encode($requestParams)));
-
     //Register the listeners to hook events
     foreach ($hooks as $hook) {
       if ($hook->event_entity && $hook->event_type_id) {
@@ -26,7 +25,18 @@ class EventServiceProvider extends ServiceProvider
 
         // NO allow listen events to Modules\Iwebhooks\Entities\Hook to prevent nfinity loops
         if (!str_contains($eventName, 'Modules\Iwebhooks\Entities\Hook')) {
-          Event::listen($eventName, function ($modelData) use ($eventName, $hook) {
+
+          Event::listen($eventName, function ($modelData) use ($eventName, $hook)
+          { 
+            if(!str_contains($eventName,"custom.bulk")){
+              $eventData = [
+                'modelClass' => get_class($modelData),
+                'modelData' => CrudResource::transformData($modelData)->resolve(),
+              ];
+            }else{
+              $eventData = $modelData;
+            }
+            
             $canCallHook = true;
             //Validate if is updated event. if event is .saved but the event is from creation then no call the hook
             if (str_contains($eventName, 'eloquent.saved') && $modelData->wasRecentlyCreated) {
@@ -38,12 +48,9 @@ class EventServiceProvider extends ServiceProvider
               $hookService = new DispatchService();
               $hookService->dispatchWebhook(
                 $hook->id, [],
-                [
-                  'modelClass' => get_class($modelData),
-                  'modelData' => CrudResource::transformData($modelData)->resolve(),
-                ]
+                $eventData
               );
-              \Log::info("Iwedhooks:: Hook [" . $hook->title . "] called in event [" . $eventName . "]");
+              \Log::info("Iwebhooks:: Hook [" . $hook->title . "] called in event [" . $eventName . "]");
             }
           });
         }
