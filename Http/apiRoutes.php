@@ -63,6 +63,15 @@ $router->group(['prefix' => '/iwebhooks/v1'], function (Router $router) {
     'staticEntity' => 'Modules\Iwebhooks\Entities\EventType',
     //'middleware' => ['create' => [], 'index' => [], 'show' => [], 'update' => [], 'delete' => [], 'restore' => []]
   ]);
+
+  //Only in dev mode
+  if(app()->environment('local')){
+    $router->post('/bulk/chunk-result', [
+      'as' => 'api.iwebhook.bulk.chunk-result',
+      'uses' => 'HookApiController@bulkChunkResult',
+    ]);
+  }
+
 // append
 
 
