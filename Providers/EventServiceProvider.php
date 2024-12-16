@@ -48,7 +48,8 @@ class EventServiceProvider extends ServiceProvider
               $hookService = new DispatchService();
               $hookService->dispatchWebhook(
                 $hook->id, [],
-                $eventData
+                $eventData,
+                $eventName
               );
               \Log::info("Iwebhooks:: Hook [" . $hook->title . "] called in event [" . $eventName . "]");
             }

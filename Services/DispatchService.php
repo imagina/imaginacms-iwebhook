@@ -11,17 +11,28 @@ class DispatchService
 {
   private $log = "Iwebhooks::Service|Dispatch|";
 
-  public function dispatchWebhook($criteria, $params, $extraBody = null)
+  public function dispatchWebhook($criteria, $params, $extraBody = null,$eventName = null)
   {
     $response = null;
     $model = null;
     $code = null;
     try {
-      //Instance hook repository
-      $modelRepository = app('Modules\Iwebhooks\Repositories\HookRepository');
-      //Request data to Repository
-      $model = $modelRepository->getItem($criteria, $params);
 
+      //Validation case bulk | The correct attribute was not obtained with the repository. Command had to be executed to clear cache
+      if(!is_null($eventName) && str_contains($eventName,"custom.bulk")){
+        
+        $result = \DB::select('SELECT * FROM iwebhooks__hooks WHERE id = '.$criteria);
+        $model = Hook::hydrate([$result[0]])->first();
+
+      }else{
+
+        //This is kept in case it's not bulk (Maybe delete in the future and leave just the top one)
+        //Instance hook repository
+        $modelRepository = app('Modules\Iwebhooks\Repositories\HookRepository');
+        //Request data to Repository
+        $model = $modelRepository->getItem($criteria, $params);
+      }
+    
       //Throw exception if no found item
       if (!$model) throw new Exception('Item not found', 204);
 
@@ -96,6 +107,7 @@ class DispatchService
 
       //Validate request
       try {
+        \Log::info($this->log."ENDPOINT: ".$data->endpoint);
         //Response of hook
         $responseHook = $client->request($data->http_method,
           $data->endpoint,
