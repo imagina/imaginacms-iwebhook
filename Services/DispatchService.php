@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Process;
 
 class DispatchService
 {
+  private $log = "Iwebhooks::Service|Dispatch|";
+
   public function dispatchWebhook($criteria, $params, $extraBody = null)
   {
     $response = null;
@@ -41,7 +43,7 @@ class DispatchService
         //Validate request
         try {
           $params = ["attributes" => $model->getAttributes()];
-
+          \Log::info($this->log.'Sending Post');
           //Response of hook
           $responseHook = $client->request('POST',
             "{$publicURL}/api/iwebhooks/v1/hooks/tunnel",
@@ -68,6 +70,7 @@ class DispatchService
       Hook::where('id',$model->id)->update(['is_loading' => 0]);
       \Log::info("Iwebhooks:: Hook ID: {$model->id} run Successfully");
     } catch (\Exception $e) {
+      \Log::error($this->log."".$e->getMessage());
       $code = $e->getCode();
       if ($code != 204 && $model) Hook::where('id',$model->id)->update(['is_loading' => 0]);
       $response = ["errors" => $e->getMessage()];
@@ -104,6 +107,7 @@ class DispatchService
 
         $response = $this->processGuzzleResponse($responseHook);
       } catch (\Exception $e) {
+        \Log::error($this->log."".$e->getMessage());
         $response = $this->processGuzzleResponse($e, true);
       }
 
