@@ -156,8 +156,16 @@ class DispatchService
         'http_status' => $response->getCode() // Save data of HTTP code
       ];
     } else {
+
+      $result = $response->getBody()->getContents();
+      //It could arrive empty
+      if(empty($result)){
+        $result = 'No content';
+      }else{
+        $result = substr($result, 0, 65500);//Response Attr is a text in DB
+      } 
       return [
-        'response' => $response->getBody()->getContents() ?? 'No content', // Save data of response
+        'response' => $result, // Save data of response
         'http_status' => $response->getStatusCode() // Save data of HTTP code
       ];
     }
