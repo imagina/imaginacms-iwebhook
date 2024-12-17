@@ -9,17 +9,30 @@ use Illuminate\Support\Facades\Process;
 
 class DispatchService
 {
-  public function dispatchWebhook($criteria, $params, $extraBody = null)
+  private $log = "Iwebhooks::Service|Dispatch|";
+
+  public function dispatchWebhook($criteria, $params, $extraBody = null,$eventName = null)
   {
     $response = null;
     $model = null;
     $code = null;
     try {
-      //Instance hook repository
-      $modelRepository = app('Modules\Iwebhooks\Repositories\HookRepository');
-      //Request data to Repository
-      $model = $modelRepository->getItem($criteria, $params);
 
+      //Validation case bulk | The correct attribute was not obtained with the repository. Command had to be executed to clear cache
+      if(!is_null($eventName) && str_contains($eventName,"custom.bulk")){
+        
+        $result = \DB::select('SELECT * FROM iwebhooks__hooks WHERE id = '.$criteria);
+        $model = Hook::hydrate([$result[0]])->first();
+
+      }else{
+
+        //This is kept in case it's not bulk (Maybe delete in the future and leave just the top one)
+        //Instance hook repository
+        $modelRepository = app('Modules\Iwebhooks\Repositories\HookRepository');
+        //Request data to Repository
+        $model = $modelRepository->getItem($criteria, $params);
+      }
+    
       //Throw exception if no found item
       if (!$model) throw new Exception('Item not found', 204);
 
@@ -41,7 +54,7 @@ class DispatchService
         //Validate request
         try {
           $params = ["attributes" => $model->getAttributes()];
-
+          \Log::info($this->log.'Sending Post');
           //Response of hook
           $responseHook = $client->request('POST',
             "{$publicURL}/api/iwebhooks/v1/hooks/tunnel",
@@ -68,6 +81,7 @@ class DispatchService
       Hook::where('id',$model->id)->update(['is_loading' => 0]);
       \Log::info("Iwebhooks:: Hook ID: {$model->id} run Successfully");
     } catch (\Exception $e) {
+      \Log::error($this->log."".$e->getMessage());
       $code = $e->getCode();
       if ($code != 204 && $model) Hook::where('id',$model->id)->update(['is_loading' => 0]);
       $response = ["errors" => $e->getMessage()];
@@ -93,6 +107,7 @@ class DispatchService
 
       //Validate request
       try {
+        \Log::info($this->log."ENDPOINT: ".$data->endpoint);
         //Response of hook
         $responseHook = $client->request($data->http_method,
           $data->endpoint,
@@ -104,6 +119,7 @@ class DispatchService
 
         $response = $this->processGuzzleResponse($responseHook);
       } catch (\Exception $e) {
+        \Log::error($this->log."".$e->getMessage());
         $response = $this->processGuzzleResponse($e, true);
       }
 
