@@ -75,7 +75,7 @@ class DispatchService
       }
 
       //Create log with statusCode, response and hookId
-      Log::create($createLog);
+      $logCreated = app('Modules\Iwebhooks\Repositories\LogRepository')->create($createLog);
 
       //Finish sync
       Hook::where('id',$model->id)->update(['is_loading' => 0]);
