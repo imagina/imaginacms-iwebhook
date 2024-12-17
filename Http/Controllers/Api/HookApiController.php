@@ -60,4 +60,19 @@ class HookApiController extends BaseCrudController
     //Return response
     return response()->json($data['response'] ?? ["data" => "Request successful"], $status);
   }
+
+  /**
+   * 
+   */
+  public function bulkChunkResult(Request $request)
+  {
+
+    \Log::info("Iwebhook: RESPONSE|bulkChunkResult|INIT ================================");
+    $data = $request->all();
+    \Log::info("Data: ".json_encode($data));
+    \Log::info("Iwebhook: RESPONSE|bulkChunkResult|END ================================");
+   
+  }
+
+
 }
