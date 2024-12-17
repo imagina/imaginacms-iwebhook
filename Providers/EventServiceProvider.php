@@ -16,6 +16,10 @@ class EventServiceProvider extends ServiceProvider
 
     //Get the event hooks to listen for events
     $requestParams = array("filter" => ['type_id' => 1, 'status' => 1]);
+
+    //Important | Extra validation when install the module
+    if(!\Schema::hasTable('iwebhooks__hooks')) return;
+
     $hooks = $hookRepository->getItemsBy(json_decode(json_encode($requestParams)));
     //Register the listeners to hook events
     foreach ($hooks as $hook) {
