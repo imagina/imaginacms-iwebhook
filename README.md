@@ -10,6 +10,9 @@ composer require imagina/iwebhooks=v10.x-dev
 php artisan module:enable Iwebhooks
 ```
 
+## JOB
+Add the following name to the queue: bulk | Example: --queue=bulk
+
 ## URL Testing Webhooks
 
 - Create a Category
