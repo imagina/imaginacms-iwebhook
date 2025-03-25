@@ -14,14 +14,20 @@ class DispatchWebhooks implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $hookId;
+    public $params;
+    public $extraBody;
+    public $eventName;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($hookId)
+    public function __construct($hookId, $params = [])
     {
       $this->hookId = $hookId;
+      $this->params = $params['params'] ?? [];
+      $this->extraBody = $params['extraBody'] ?? null;
+      $this->eventName = $params['eventName'] ?? null;
     }
 
     /**
@@ -32,6 +38,6 @@ class DispatchWebhooks implements ShouldQueue
     public function handle()
     {
       $service = new DispatchService();
-      $service->dispatchWebhook($this->hookId, []);
+      $service->dispatchWebhook($this->hookId, $this->params, $this->extraBody, $this->eventName);
     }
 }

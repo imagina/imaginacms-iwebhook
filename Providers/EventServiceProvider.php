@@ -31,7 +31,7 @@ class EventServiceProvider extends ServiceProvider
         if (!str_contains($eventName, 'Modules\Iwebhooks\Entities\Hook')) {
 
           Event::listen($eventName, function ($modelData) use ($eventName, $hook)
-          { 
+          {
             if(!str_contains($eventName,"custom.bulk")){
               $eventData = [
                 'modelClass' => get_class($modelData),
@@ -40,7 +40,7 @@ class EventServiceProvider extends ServiceProvider
             }else{
               $eventData = $modelData;
             }
-            
+
             $canCallHook = true;
             //Validate if is updated event. if event is .saved but the event is from creation then no call the hook
             if (str_contains($eventName, 'eloquent.saved') && $modelData->wasRecentlyCreated) {
@@ -49,12 +49,10 @@ class EventServiceProvider extends ServiceProvider
             //Call the hook
             if ($canCallHook) {
               //Call the hook and include the model data
-              $hookService = new DispatchService();
-              $hookService->dispatchWebhook(
-                $hook->id, [],
-                $eventData,
-                $eventName
-              );
+              \Modules\Iwebhooks\Jobs\DispatchWebhooks::dispatch($hook->id, [
+                'extraBody' => $eventData,
+                'eventName' => $eventName
+              ]);
               \Log::info("Iwebhooks:: Hook [" . $hook->title . "] called in event [" . $eventName . "]");
             }
           });
