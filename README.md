@@ -24,3 +24,6 @@ siteurl/api/iwebhooks/v1/bulk/chunk-result
 ```
 
 Check results in log.
+
+> ⚠ **Warning:**  
+> To use the hooks that listen to entity events or those running via `cron` require the *jobs* to be active.
