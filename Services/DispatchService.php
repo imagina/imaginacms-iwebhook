@@ -20,7 +20,7 @@ class DispatchService
 
       //Validation case bulk | The correct attribute was not obtained with the repository. Command had to be executed to clear cache
       if(!is_null($eventName) && str_contains($eventName,"custom.bulk")){
-        
+
         $result = \DB::select('SELECT * FROM iwebhooks__hooks WHERE id = '.$criteria);
         $model = Hook::hydrate([$result[0]])->first();
 
@@ -32,7 +32,6 @@ class DispatchService
         //Request data to Repository
         $model = $modelRepository->getItem($criteria, $params);
       }
-    
       //Throw exception if no found item
       if (!$model) throw new Exception('Item not found', 204);
 
@@ -40,7 +39,7 @@ class DispatchService
       if ($model->is_loading == 1) throw new Exception('Item is running', 204);
 
       //Start sync
-      $model->update(['is_loading' => 1]);
+      if(is_null($eventName)) $model->update(['is_loading' => 1]);
       $createLog = ['hook_id' => $model->id];
 
       //Add extra body [IMPORTANT] after this line don't save/update directly this model
@@ -71,7 +70,12 @@ class DispatchService
           $createLog = array_merge($createLog, $this->processGuzzleResponse($e, true));
         }
       } else {
-        $createLog = array_merge($createLog, $this->getResponseWebhook($model));
+        try {
+          $webhookResponse = $this->getResponseWebhook($model);
+        } catch (\Exception $e) {
+          $webhookResponse = $this->processGuzzleResponse($e, true);
+        }
+        $createLog = array_merge($createLog, $webhookResponse);
       }
 
       //Create log with statusCode, response and hookId
@@ -93,7 +97,11 @@ class DispatchService
   public function getResponseWebhook($data)
   {
     $response = [];
-    if (!isset($data->http_method)) throw new Exception('Bad format data', 400);
+    if (!isset($data->http_method))
+      return [
+        'response' => 'Bad format data',
+        'http_status' => 400
+      ];
 
     if ($data->http_method == 'PING') {
       // Get the IP and PORT
@@ -163,7 +171,7 @@ class DispatchService
         $result = 'No content';
       }else{
         $result = substr($result, 0, 65500);//Response Attr is a text in DB
-      } 
+      }
       return [
         'response' => $result, // Save data of response
         'http_status' => $response->getStatusCode() // Save data of HTTP code
