@@ -57,21 +57,42 @@ class HookApiController extends BaseCrudController
       $status = $this->getStatusError($e->getCode());
     }
 
-    //Return response
-    return response()->json($data['response'] ?? ["data" => "Request successful"], $status);
+
   }
 
   /**
-   * 
+   * Only to testing webhook receive information
    */
   public function bulkChunkResult(Request $request)
   {
 
-    \Log::info("Iwebhook: RESPONSE|bulkChunkResult|INIT ================================");
-    $data = $request->all();
-    \Log::info("Data: ".json_encode($data));
-    \Log::info("Iwebhook: RESPONSE|bulkChunkResult|END ================================");
-   
+    try {
+
+      if(app()->environment('local')){
+
+        $data = $request->all();
+
+        $response = [
+          "data" => [
+            'chunck_id' => $data['chunckId'],
+            'totalItems' => $data['totalItems'],
+            'completed' => $data['completed'],
+            'errors' => $data['errors']
+          ]
+        ];
+
+      }
+
+
+    } catch (\Exception $e) {
+
+      $status = $this->getStatusError($e->getCode());
+      $response = ["messages" => [["message" => $e->getMessage(), "type" => "error"]]];
+    }
+
+    //Return response
+    return response()->json($response ?? ["data" => "Chunk Result Testing Received"], $status ?? 200);
+
   }
 
 
